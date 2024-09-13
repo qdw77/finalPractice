@@ -46,7 +46,7 @@ public class BoardController {
 		paramMap.put("lastIndex", paginationInfo.getLastRecordIndex());
 		paramMap.put("recordCountPerPage", paginationInfo.getRecordCountPerPage());
 		List<HashMap<String, Object>> list = boardService.selectBoardList(paramMap);
-		int toCnt = boardService.selectBoardListCnt(paramMap);
+		int totCnt = boardService.selectBoardListCnt(paramMap);
 		paginationInfo.setTotalRecordCount(totCnt);
 		
 		mv.addObject("list", list);
