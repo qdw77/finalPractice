@@ -39,11 +39,11 @@
 		});
 		
 		$("#btn_delete").on('click', function(){
-			fn_delete();
+			 fn_delete(); 
 		});
 		
 		$("#btn_reply_save").on('click', function(){
-			fn_comment();
+			fn_comment(); 
 		});
 	});
 	

@@ -45,6 +45,7 @@ public class BoardController {
 		paramMap.put("firstIndex", paginationInfo.getFirstRecordIndex());
 		paramMap.put("lastIndex", paginationInfo.getLastRecordIndex());
 		paramMap.put("recordCountPerPage", paginationInfo.getRecordCountPerPage());
+		
 		List<HashMap<String, Object>> list = boardService.selectBoardList(paramMap);
 		int totCnt = boardService.selectBoardListCnt(paramMap);
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -62,7 +63,10 @@ public class BoardController {
 		HashMap<String, Object> loginInfo = null;
 		loginInfo = (HashMap<String, Object>) session.getAttribute("loginInfo");
 		if(loginInfo != null) {
+			HashMap<String, Object> boardInfo = boardService.selectBoardDetail(boardIdx);
 			model.addAttribute("boardIdx", boardIdx);
+			model.addAttribute("boardInfo", boardInfo);
+			model.addAttribute("loginInfo",loginInfo);
 			return "board/boardDetail";
 		}else {
 			return "redirect:/login.do";
@@ -72,11 +76,15 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/board/registBoard.do")
-	public String registBoard(HttpSession session, Model model) {
+	public String registBoard(HttpSession session, Model model, @RequestParam HashMap<String, Object> paramMap) {
 		HashMap<String, Object> loginInfo = null;
 		loginInfo = (HashMap<String, Object>) session.getAttribute("loginInfo");
 		if(loginInfo != null) {
-			model.addAttribute("flag", "I");
+			String flag = paramMap.get("flag").toString();
+			model.addAttribute("flag", flag);
+			if("U".equals(flag)) {
+				model.addAttribute("boardIdx", paramMap.get("boardIdx").toString());
+			}
 			return "board/registBoard";
 		}else {
 			return "redirect:/login.do";
@@ -87,6 +95,16 @@ public class BoardController {
 	@RequestMapping("/board/saveBoard.do")
 	public ModelAndView saveBoard(@RequestParam HashMap<String, Object> paramMap, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		int resultChk =0;
+		
+		HashMap<String, Object> sessionInfo =(HashMap<String, Object>)
+		session.getAttribute("loginInfo");
+		paramMap.put("memberId", sessionInfo.get("id").toString());
+		
+		resultChk =boardService.saveBoard(paramMap);
+		
+		mv.addObject("resultChk", resultChk);
+		mv.setViewName("jsonView");
 		
 		return mv;
 	}

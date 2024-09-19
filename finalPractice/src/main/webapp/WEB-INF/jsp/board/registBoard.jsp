@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,17 +9,19 @@
 	crossorigin="anonymous"></script>
 <title>게시물 등록</title>
 <style>
-	table{
-		margin:auto;
-		width:100%;
-		height:auto;
-	}
-	tr {
-		height:30px;
-	}
-	.text {
-	 width:100%;
-	}
+table {
+	margin: auto;
+	width: 100%;
+	height: auto;
+}
+
+tr {
+	height: 30px;
+}
+
+.text {
+	width: 100%;
+}
 </style>
 <script type="text/javascript">
 /* 파일 업로드 관련 변수 */
@@ -34,10 +36,9 @@ var deleteFiles = new Array();
 		var flag = "${flag}";
 		if(flag === "U"){
 			fn_detail("${boardIdx}");
-			
 		}
-	}
-		
+	
+	}		
 		
 		$("#btn_save").on('click', function(){
 			fn_save();
@@ -54,33 +55,32 @@ var deleteFiles = new Array();
 	function fn_save(){
 		
 	}
-
+		
 </script>
 </head>
 <body>
 	<div>
-		<form id="saveFrm" name="saveFrm" >
-			<input type="hidden" id="statusFlag" name="statusFlag" value="${flag}"/>
-			<input type="hidden" id="boardIdx" name="boardIdx" value="${boardIdx}"/>
+		<form id="saveFrm" name="saveFrm">
+			<input type="hidden" id="statusFlag" name="statusFlag"
+				value="${flag}" /> <input type="hidden" id="boardIdx"
+				name="boardIdx" value="${boardIdx}" />
 			<table>
 				<tr>
 					<th>제목1</th>
-					<td>
-						<input type="text" class="text" id="boardTitle" name="boardTitle"/>
-					</td>
+					<td><input type="text" class="text" id="boardTitle"
+						name="boardTitle" /></td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td>
-						<textarea rows="20" cols="60" id="boardContent" name="boardContent" class="text"></textarea>
-					</td>
+					<td><textarea rows="20" cols="60" id="boardContent"
+							name="boardContent" class="text"></textarea></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div style="float:right;">
-		<input type="button" id="btn_save" name="btn_save" value="저장"/>
-		<input type="button" id="btn_list" name="btn_list" value="목록"/>
+	<div style="float: right;">
+		<input type="button" id="btn_save" name="btn_save" value="저장" /> <input
+			type="button" id="btn_list" name="btn_list" value="목록" />
 	</div>
 </body>
 </html>

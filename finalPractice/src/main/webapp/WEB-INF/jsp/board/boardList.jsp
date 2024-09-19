@@ -25,7 +25,7 @@
 	
 	function fn_selectList(pageIndex){
 		$("#pageIndex").val(pageIndex);
-		var frm = $("#searchFrm").seriallize();
+		var frm = $("#searchFrm").serialize();
 		$.ajax({
 			url:'/board/selectBoardList.do',
 			method:'post',
@@ -36,21 +36,21 @@
 				var boardHtml = '';
 				if(data.list.length >0){
 					for(var i=0; i<data.list.length; i++){
-						boardHtml +='<tr>';
-						boardHtml +='<td>';
-						boardHtml +=data.list[i].rnum;
-						boardHtml +='</td>';
-						boardHtml +='<td>';
-						boardHtml +='<a href="javascript:fn_detail(\''+data.list[i].boardIdx+'\';">';
-						boardHtml +=data.list[i].boardTitle;
-						boardHtml +='</td>';
-						boardHtml +='<td>';
+		    			boardHtml +='<tr>';	
+		    			boardHtml +='<td>';
+		    			boardHtml +=data.list[i].rnum;
+		    			boardHtml +='</td>';
+		    			boardHtml +='<td>';
+		    			boardHtml +='<a href="javascript:fn_detail(\''+data.list[i].boardIdx+'\');">';
+		    			boardHtml +=data.list[i].boardTitle;
+		    			boardHtml +='</td>';
+		    			boardHtml +='<td>';
 						boardHtml +=data.list[i].createId;
 						boardHtml +='</td>';
 						boardHtml +='<td>';
 						boardHtml +=data.list[i].createDate;
 						boardHtml +='</td>';
-						boardHtml +='</tr>'
+						boardHtml +='</tr>';
 						
 					}
 				}else{
@@ -70,11 +70,14 @@
 	}
 	
 	function fn_detail(boardIdx){
-
+	
 	}
 	
 	function fn_insert(){ 
-
+		$("#flag").val("I");
+		var frm =$("#boardFrm");
+		frm.attr("action", "/board/registBoard.do");
+		frm.submit();
 	}
 	
 	function fn_paging_move(pageIndex){
