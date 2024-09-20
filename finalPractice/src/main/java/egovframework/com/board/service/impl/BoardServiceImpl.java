@@ -40,6 +40,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		}else if("U".equals(flag)) {
 			resultChk = boardDAO.updateBoard(paramMap);
 		}
+		
 				
 	
 		return resultChk;

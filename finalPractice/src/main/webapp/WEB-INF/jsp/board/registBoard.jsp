@@ -38,7 +38,7 @@ var deleteFiles = new Array();
 			fn_detail("${boardIdx}");
 		}
 	
-	}		
+	
 		
 		$("#btn_save").on('click', function(){
 			fn_save();
@@ -47,14 +47,61 @@ var deleteFiles = new Array();
 		$("#btn_list").on('click', function(){
 			location.href="/board/boardList.do";
 		});
-
-	function fn_detail(boardIdx){
-
-	}
+	});
+		function fn_detail(boardIdx){
+			
+			$.ajax({
+			    url: '/board/getBoardDetail.do',
+			    method: 'post',
+			    data : { "boardIdx" : boardIdx},
+			    dataType : 'json',
+			    success: function (data, status, xhr) {
+					$("#boardTitle").val(data.boardInfo.boardTitle);
+					$("#boardContent").val(data.boardInfo.boardContent);
+					/* fn_filelist(data.boardInfo.fileGroupIdx); */
+			    },
+			    error: function (data, status, err) {
+			    	console.log(err);
+			    }
+			});
 	
-	function fn_save(){
+		}
 		
-	}
+		function fn_save(){
+			var formData = new FormData($("#saveFrm")[0]);
+			
+			for(var x=0; x<content_files.length; x++){
+				if(!content_files[x].is_delete){
+					formData.append("fileList", content_files[x]); 
+				}
+			}
+			if(deleteFiles.length >0){
+				formData.append("deleteFiles", deleteFiles);	
+			}
+			
+			$.ajax({
+			    url: '/board/saveBoard.do',
+			    method: 'post',
+			    data : formData,
+			    enctype : "multipart/form-data",
+			    processData : false,
+			    contentType : false,
+			    dataType : 'json',
+			    success: function (data, status, xhr) {
+			    	if(data.resultChk > 0){
+			    		alert("저장되었습니다.");
+			    		location.href="/board/boardList.do";
+			    	}else{
+			    		alert("저장에 실패하였습니다.");
+			    	}
+			    },
+			    error: function (data, status, err) {
+			    	console.log(err);
+			    }
+			});
+			
+		}
+
 		
 </script>
 </head>

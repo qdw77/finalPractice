@@ -70,6 +70,11 @@
 	}
 	
 	function fn_detail(boardIdx){
+		
+		$("#boardIdx").val(boardIdx);
+		var frm =$("#boardFrm");
+		frm.attr("action", "/board/boardDetail.do");
+		frm.submit();
 	
 	}
 	

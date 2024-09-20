@@ -75,6 +75,15 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping("/board/getBoardDetail.do")
+	public ModelAndView getBoardDetail(@RequestParam(name="boardIdx") int boardIdx) {
+		ModelAndView mv = new ModelAndView();
+		HashMap<String, Object> boardInfo = boardService.selectBoardDetail(boardIdx);
+		mv.addObject("boardInfo", boardInfo);
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
 	@RequestMapping("/board/registBoard.do")
 	public String registBoard(HttpSession session, Model model, @RequestParam HashMap<String, Object> paramMap) {
 		HashMap<String, Object> loginInfo = null;
@@ -101,7 +110,7 @@ public class BoardController {
 		session.getAttribute("loginInfo");
 		paramMap.put("memberId", sessionInfo.get("id").toString());
 		
-		resultChk =boardService.saveBoard(paramMap);
+		resultChk = boardService.saveBoard(paramMap);
 		
 		mv.addObject("resultChk", resultChk);
 		mv.setViewName("jsonView");
@@ -113,8 +122,15 @@ public class BoardController {
 	public ModelAndView deleteBoard(@RequestParam HashMap<String, Object> paramMap
 			, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		int resultChk = 0;
 		
+		HashMap<String, Object> sessionInfo =(HashMap<String, Object>) session.getAttribute("loginInfo");
+		paramMap.put("memberId", sessionInfo.get("id").toString());
 		
+		resultChk = boardService.deleteBoard(paramMap);
+		
+		mv.addObject("resultChk", resultChk);
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	
@@ -123,20 +139,36 @@ public class BoardController {
 			@RequestParam HashMap<String, Object> paramMap, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		
+		HashMap<String, Object> sessionInfo = (HashMap<String, Object>) session.getAttribute("loginInfo");
+		paramMap.put("memberId", sessionInfo.get("id").toString());
+		
+		int resultChk = 0;
+		
+		resultChk = boardService.insertReply(paramMap);
+		
+		mv.addObject("resultChk", resultChk);
+		mv.setViewName("jsonView");
+		
 		return mv;
 	}
 	
 	@RequestMapping("/board/getBoardReply.do")
 	public ModelAndView getBoardReply(@RequestParam HashMap<String, Object> paramMap) {
 		ModelAndView mv = new ModelAndView();
+		List<HashMap<String, Object>> replyList = boardService.selectBoardReply(paramMap);
+		mv.addObject("replyList", replyList);
+		mv.setViewName("jsonView");
 
 		return mv;
 	}
 	
 	@RequestMapping("/board/deleteBoardReply.do")
-	public ModelAndView deleteBoardReply(
-			@RequestParam(name="replyIdx") int replyIdx, HttpSession session) {
+	public ModelAndView deleteBoardReply(@RequestParam(name="replyIdx") int replyIdx, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		int resultChk=0;
+		HashMap<String, Object> sessionInfo = (HashMap<String, Object>) session.getAttribute("loginInfo");
+		
+		
 		
 		return mv;
 	}
