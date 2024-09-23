@@ -165,11 +165,14 @@ public class BoardController {
 	@RequestMapping("/board/deleteBoardReply.do")
 	public ModelAndView deleteBoardReply(@RequestParam(name="replyIdx") int replyIdx, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		int resultChk=0;
+		int resultChk =0;
+		
 		HashMap<String, Object> sessionInfo = (HashMap<String, Object>) session.getAttribute("loginInfo");
-		
-		
-		
+	
+		resultChk= boardService.deleteReply(replyIdx);
+
+		mv.addObject("resultChk", resultChk);
+		mv.setViewName("jsonView");
 		return mv;
 	}
 

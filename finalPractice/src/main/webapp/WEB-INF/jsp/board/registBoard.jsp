@@ -58,7 +58,7 @@ var deleteFiles = new Array();
 			    success: function (data, status, xhr) {
 					$("#boardTitle").val(data.boardInfo.boardTitle);
 					$("#boardContent").val(data.boardInfo.boardContent);
-					/* fn_filelist(data.boardInfo.fileGroupIdx); */
+					fn_filelist(data.boardInfo.fileGroupIdx);
 			    },
 			    error: function (data, status, err) {
 			    	console.log(err);
